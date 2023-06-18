@@ -8,14 +8,14 @@ import PrimaryLayout from './layout/PrimaryLayout'
 function App() {
 
   return (
-    <>
+    <main className='bg-gray-100 h-screen'>
       <Routes>
         <Route path='/' element={<PrimaryLayout/>}>
           <Route index element={<Home />} />
           <Route path="/archive" element={<Archive />} />
         </Route>
       </Routes>
-    </>
+    </main>
   )
 }
 

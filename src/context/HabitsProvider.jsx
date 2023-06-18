@@ -1,28 +1,29 @@
 /* eslint-disable react/prop-types */
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { createContext } from "react";
 import habits from "../db/habits_data";
 
 
-const habitReducer=(state,{type,payload})=>{
-switch (type) {
+const habitReducer = (state, { type, payload }) => {
+    switch (type) {
 
-    case "":
-        
-        return {...state,payload};
+        case "":
 
-    default:
-        return state;
+            return { ...state, payload };
+
+        default:
+            return state;
+    }
 }
-}
 
-export const HabitsContext=createContext()
-const HabitsProvider = ({children}) => {
-    const [habitsState,habitsDispatch]=useReducer(habitReducer,habits)
+export const HabitsContext = createContext()
+const HabitsProvider = ({ children }) => {
+    const [habitsState, habitsDispatch] = useReducer(habitReducer, habits);
+    const [toggleModal, setToggleModal] = useState(false)
     return (
-      <HabitsContext.Provider value={{habitsState,habitsDispatch}}>
-        {children}
-      </HabitsContext.Provider>
+        <HabitsContext.Provider value={{ habitsState, habitsDispatch, toggleModal, setToggleModal }}>
+            {children}
+        </HabitsContext.Provider>
     );
 };
 
