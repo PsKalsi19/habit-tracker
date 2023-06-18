@@ -18,7 +18,6 @@ const initialFormData = {
 }
 
 const habitReducer = (state, { type, payload }) => {
-    debugger
 
     switch (type) {
         case "add_to_archive":
