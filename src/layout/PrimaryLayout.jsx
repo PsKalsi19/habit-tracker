@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 import AddHabit from "../components/add-habit-fab/AddHabit";
-import HabitFormModal from "../components/habit-form/HabitFormModal";
 
 const PrimaryLayout = () => {
     return (
