@@ -1,8 +1,8 @@
 
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import Home from './pages/Home/Home'
-import Archive from './pages/Archive/Archive'
+import Home from './pages/home/Home'
+import Archive from './pages/archive/Archive'
 import PrimaryLayout from './layout/PrimaryLayout'
 
 function App() {
