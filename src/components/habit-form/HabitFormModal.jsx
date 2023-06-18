@@ -7,22 +7,49 @@ const currentDate = new Date().toISOString().split('T')[0];
 
 const HabitFormModal = () => {
     const { toggleModal, setToggleModal, formData,
-        setFormData } = useContext(HabitsContext)
-    const {  name, repeat, goal, timeOfTheDay, startDate } = formData
+        setFormData, habitsDispatch, habitsState, initialFormData } = useContext(HabitsContext)
+    const { name, repeat, goal, timeOfTheDay, startDate, id } = formData
+
+    const forEdit = id !== 0
     const modalSubmit = (e) => {
         e.preventDefault()
+        if (forEdit) {
+            habitsDispatch({
+                type: 'edit_habit', payload: {
+                    id: id,
+                    ...formData,
+                }
+            })
+        }
+        else {
+            habitsDispatch({
+                type: 'add_habit', payload: {
+                    ...formData,
+                    id: habitsState.length + 1,
+                }
+            })
+        }
+
+        setFormData(initialFormData)
         setToggleModal(false)
     }
+
     const handleChange = (e) => {
         setFormData((prevData) => ({
             ...prevData,
             [e.target.name]: e.target.value
         }));
     };
+
+    const handleClose = () => {
+
+        setFormData(initialFormData)
+        setToggleModal(false)
+    }
     return (
         <>
             <Transition appear show={toggleModal} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => setToggleModal(false)}>
+                <Dialog as="div" className="relative z-10" onClose={handleClose}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -51,7 +78,7 @@ const HabitFormModal = () => {
                                         as="h3"
                                         className="my-4 text-lg font-semibold leading-6 text-center text-white sm:text-2xl"
                                     >
-                                        Add Habit
+                                        {forEdit ? "Edit Habit" : "Add Habit"}
                                     </Dialog.Title>
                                     <div className="mt-2">
 
@@ -168,13 +195,21 @@ const HabitFormModal = () => {
 
                                                 </div>
                                             </div>
-                                            <div className="flex justify-center w-auto mt-8">
+                                            <div className="flex justify-center w-auto mt-8 space-x-8">
                                                 <button
                                                     type="submit"
                                                     className="px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                                    
+
                                                 >
                                                     Submit
+                                                </button>
+                                                <button
+                                                    onClick={handleClose}
+                                                    type="button"
+                                                    className="px-4 py-2 text-sm font-medium text-gray-100 bg-red-400 border border-transparent rounded-md hover:bg-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+
+                                                >
+                                                    Cancel
                                                 </button>
                                             </div>
                                         </form>
